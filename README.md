@@ -6,8 +6,6 @@ A modern responsive SaaS landing page built for the Nexsoft Solutions Frontend D
 
 ## Live Demo
 
-Add your GitHub Pages URL here after deployment:
-
 ```text
 https://fazal305.github.io/nexsoft-landing-page/
 ```
