@@ -1,50 +1,75 @@
-// Changes navbar style after scrolling
+/* 
+   NAVBAR SCROLL
+ */
 function updateNavbarOnScroll() {
-    const siteNavbar = document.getElementById("siteNavbar");
+    const siteNavbar = document.querySelector("#siteNavbar");
 
-    if (window.scrollY > 80) {
-        siteNavbar.classList.add("navbar-scrolled");
-    } else {
-        siteNavbar.classList.remove("navbar-scrolled");
+    if (!siteNavbar) {
+        return;
     }
+
+    siteNavbar.classList.toggle("navbar-scrolled", window.scrollY > 80);
 }
 
-// Runs smooth scrolling for internal page links
+/* 
+   SMOOTH SCROLL
+ */
 function setupSmoothScroll() {
-    $("a[href^='#']").on("click", function (event) {
-        const targetId = $(this).attr("href");
+    const internalLinks = document.querySelectorAll('a[href^="#"]');
+    const navbarCollapse = document.querySelector("#mainNavbar");
 
-        if ($(targetId).length) {
+    internalLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            const targetId = link.getAttribute("href");
+
+            if (!targetId || targetId === "#") {
+                return;
+            }
+
+            const targetSection = document.querySelector(targetId);
+
+            if (!targetSection) {
+                return;
+            }
+
             event.preventDefault();
 
-            $("html, body").animate({
-                scrollTop: $(targetId).offset().top - 70
-            }, 650);
-        }
+            window.scrollTo({
+                top: targetSection.offsetTop - 70,
+                behavior: "smooth"
+            });
+
+            if (navbarCollapse && navbarCollapse.classList.contains("show")) {
+                const menu = bootstrap.Collapse.getOrCreateInstance(navbarCollapse);
+                menu.hide();
+            }
+        });
     });
 }
 
-// Closes mobile navbar after clicking a nav link
-function setupMobileNavbarClose() {
-    $(".site-nav-link, .nav-cta").on("click", function () {
-        $(".navbar-collapse").collapse("hide");
-    });
-}
-
-// Reveals cards when they enter the screen
+/* 
+   REVEAL ANIMATIONS
+ */
 function setupRevealAnimations() {
     const revealCards = document.querySelectorAll(".reveal-card");
 
-    const revealObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.15
-    });
+    if (!revealCards.length) {
+        return;
+    }
+
+    const revealObserver = new IntersectionObserver(
+        function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.15
+        }
+    );
 
     revealCards.forEach(function (card, index) {
         card.style.transitionDelay = `${index * 0.08}s`;
@@ -52,12 +77,19 @@ function setupRevealAnimations() {
     });
 }
 
-// Updates pricing text when monthly/yearly toggle changes
+/* 
+   PRICING TOGGLE
+ */
 function setupPricingToggle() {
-    const pricingToggle = document.getElementById("pricingToggle");
+    const pricingToggle = document.querySelector("#pricingToggle");
     const priceValues = document.querySelectorAll(".price-value");
-    const monthlyLabel = document.getElementById("monthlyLabel");
-    const yearlyLabel = document.getElementById("yearlyLabel");
+    const monthlyLabel = document.querySelector("#monthlyLabel");
+    const yearlyLabel = document.querySelector("#yearlyLabel");
+    const pricePeriods = document.querySelectorAll(".price-period");
+
+    if (!pricingToggle || !priceValues.length || !monthlyLabel || !yearlyLabel) {
+        return;
+    }
 
     pricingToggle.addEventListener("change", function () {
         const priceType = pricingToggle.checked ? "yearly" : "monthly";
@@ -66,59 +98,90 @@ function setupPricingToggle() {
             priceValue.textContent = priceValue.dataset[priceType];
         });
 
+        pricePeriods.forEach(function (period) {
+            period.textContent = pricingToggle.checked ? "/ month, billed yearly" : "/ month";
+        });
+
         monthlyLabel.classList.toggle("active", !pricingToggle.checked);
         yearlyLabel.classList.toggle("active", pricingToggle.checked);
     });
 }
 
-// Animates stat numbers when stats section enters the screen
+/* 
+   STATS COUNTER
+ */
 function setupStatsCounter() {
+    const statsGrid = document.querySelector("#statsGrid");
+    const statNumbers = document.querySelectorAll(".stat-number");
+
+    if (!statsGrid || !statNumbers.length) {
+        return;
+    }
+
     let hasAnimatedStats = false;
-    const statsGrid = document.getElementById("statsGrid");
 
-    const statsObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-            if (entry.isIntersecting && !hasAnimatedStats) {
+    const statsObserver = new IntersectionObserver(
+        function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting || hasAnimatedStats) {
+                    return;
+                }
+
                 hasAnimatedStats = true;
-
-                $(".stat-number").each(function () {
-                    const statElement = $(this);
-                    const targetNumber = parseFloat(statElement.attr("data-target"));
-                    const suffix = statElement.attr("data-suffix");
-
-                    $({ currentValue: 0 }).animate({ currentValue: targetNumber }, {
-                        duration: 1300,
-                        easing: "swing",
-                        step: function () {
-                            const currentNumber = targetNumber % 1 === 0
-                                ? Math.floor(this.currentValue)
-                                : this.currentValue.toFixed(1);
-
-                            statElement.text(currentNumber + suffix);
-                        },
-                        complete: function () {
-                            statElement.text(targetNumber + suffix);
-                        }
-                    });
-                });
-
+                animateStats(statNumbers);
                 statsObserver.unobserve(statsGrid);
-            }
-        });
-    }, {
-        threshold: 0.4
-    });
+            });
+        },
+        {
+            threshold: 0.4
+        }
+    );
 
     statsObserver.observe(statsGrid);
 }
 
-window.addEventListener("scroll", updateNavbarOnScroll);
+/* 
+   ANIMATE STATS
+ */
+function animateStats(statNumbers) {
+    statNumbers.forEach(function (statElement) {
+        const targetNumber = Number(statElement.dataset.target);
+        const suffix = statElement.dataset.suffix || "";
+        const duration = 1300;
+        const startTime = performance.now();
 
-$(document).ready(function () {
+        function updateCounter(currentTime) {
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
+            const currentValue = targetNumber * progress;
+            const formattedValue = Number.isInteger(targetNumber)
+                ? Math.floor(currentValue)
+                : currentValue.toFixed(1);
+
+            statElement.textContent = `${formattedValue}${suffix}`;
+
+            if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+            } else {
+                statElement.textContent = `${targetNumber}${suffix}`;
+            }
+        }
+
+        requestAnimationFrame(updateCounter);
+    });
+}
+
+/* 
+   INIT
+ */
+function initializeLandingPage() {
+    updateNavbarOnScroll();
     setupSmoothScroll();
-    setupMobileNavbarClose();
     setupRevealAnimations();
     setupPricingToggle();
     setupStatsCounter();
-    updateNavbarOnScroll();
-});
+
+    window.addEventListener("scroll", updateNavbarOnScroll);
+}
+
+document.addEventListener("DOMContentLoaded", initializeLandingPage);

@@ -2,184 +2,104 @@
 
 A modern responsive SaaS landing page built for the Nexsoft Solutions Frontend Development Internship.
 
----
+## Live Links
 
-## Live Demo
+- GitHub Repository: https://github.com/fazal305/nexsoft-landing-page
+- Live Demo: https://fazal305.github.io/nexsoft-landing-page/
 
-```text
-https://fazal305.github.io/nexsoft-landing-page/
-```
+## Overview
 
----
+NexFlow is a fictional developer productivity platform landing page designed for modern software teams.
 
-## Project Overview
-
-NexFlow is a fictional developer productivity platform designed to help modern software teams:
-
-- Ship faster
-- Build smarter
-- Scale effortlessly
-
-The landing page follows modern SaaS design patterns and focuses on performance, responsiveness, animations, and clean UI design.
-
----
+The project focuses on SaaS-style layout, responsive design, scroll animations, pricing cards, a pricing toggle, developer-focused copywriting, and clean frontend presentation.
 
 ## Features
 
-### Responsive Navbar
-
-- Fixed navigation
+- Responsive fixed navbar
 - Mobile hamburger menu
 - Smooth scrolling
-- Glassmorphism effect on scroll
+- Hero section with code editor mockup
+- Animated stats counter
+- Services section
+- Pricing section
+- Monthly/yearly pricing toggle
+- Testimonials section
+- CTA section
+- Footer with social links
+- Scroll reveal animations
+- Dark neon SaaS interface
+- GitHub Pages ready
 
-### Hero Section
-
-- Full-screen hero
-- Gradient heading
-- Animated beta badge
-- CSS code editor mockup
-- Animated statistics
-
-### Services Section
-
-- 6 service cards
-- Hover animations
-- IntersectionObserver reveal effects
-- Responsive grid layout
-
-### Pricing Section
-
-- Monthly / Yearly toggle
-- Dynamic pricing updates
-- Highlighted Pro plan
-- Hover effects
-
-### Testimonials Section
-
-- Developer testimonials
-- CSS avatar placeholders
-- Scroll animations
-
-### CTA Section
-
-- Conversion-focused call to action
-- Neon gradient styling
-
-### Footer
-
-- Multi-column layout
-- GitHub and LinkedIn links
-- Mobile responsive
-
----
-
-## Technologies Used
-
-### Frontend
+## Tech Stack
 
 - HTML5
 - CSS3
-- JavaScript (Vanilla JS)
-- jQuery 3.7.1
+- JavaScript
 - Bootstrap 5
+- jQuery
+- Google Fonts
+- GitHub Pages
+  Folder Structure
+  nexsoft-landing-page/
+  index.html
+  styles.css
+  script.js
+  README.md
+  LICENSE
+  .gitignore
+  Getting Started
 
-### Fonts
+Clone the repository:
 
-- Inter
-- Fira Code
-
----
-
-## Animations Used
-
-### CSS Animations
-
-- Hero background pulse
-- Badge glow effect
-- Terminal cursor blink
-- Hover transitions
-
-### JavaScript Animations
-
-- Stats counter animation
-- Pricing toggle updates
-- Smooth scrolling
-
-### Scroll Animations
-
-- IntersectionObserver reveal effects
-- Staggered card animations
-
----
-
-## Optimization Techniques
-
-- Semantic HTML structure
-- CSS custom properties
-- Mobile-first design
-- GPU-accelerated animations
-- Image-free visual design
-- Responsive layouts
-- Bootstrap grid system
-
----
-
-## Project Structure
-
-```text
-nexsoft-landing-page
-│
-├── index.html
-├── styles.css
-├── script.js
-├── README.md
-├── LICENSE
-└── .gitignore
-```
-
----
-
-## How To Run
-
-1. Download or clone repository
-
-```powershell
 git clone https://github.com/fazal305/nexsoft-landing-page.git
-```
 
-2. Open folder
+Open the folder:
 
-```powershell
 cd nexsoft-landing-page
-```
 
-3. Open
+Open index.html in your browser.
 
-```powershell
-index.html
-```
+No installation or build step is required.
 
----
+Architecture Notes
 
-## Internship Credit
+The project is a static frontend landing page.
 
-Built as part of the Nexsoft Solutions Frontend Development Internship.
+index.html contains the landing page sections and content.
+styles.css controls the dark SaaS design, responsive layout, cards, buttons, and animations.
+script.js handles smooth scrolling, mobile menu closing, pricing toggle updates, reveal animations, navbar scroll state, and stats counter animation.
+Accessibility
 
-Developer:
+Accessibility support includes:
 
-**Fazal Abbas**
+Semantic sections
+Clear heading structure
+Keyboard-friendly links and buttons
+Mobile navigation support
+High-contrast dark interface
+Social links with accessible labels
+Performance
 
-GitHub:
+Performance notes:
 
-https://github.com/fazal305
+Static website
+No image-heavy layout
+CSS-based visuals
+Lightweight JavaScript
+GitHub Pages compatible
+Reduced jQuery dependency in custom logic
 
-LinkedIn:
-
-https://www.linkedin.com/in/fazal-abbas-4653dg86
-
----
-
-## License
-
-This project is licensed under the MIT License.
+Lessons Learned
+Building a SaaS-style landing page
+Creating pricing cards and toggles
+Using IntersectionObserver for reveal effects
+Creating animated counters
+Combining Bootstrap layout with custom CSS
+Preparing a frontend project for portfolio presentation
+Future Improvements
+Add real product screenshots
+Add contact form section
+Add FAQ section
+Add Lighthouse score screenshot
+Add deployment workflow
+Add case-study article for the design process
