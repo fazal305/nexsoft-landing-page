@@ -377,6 +377,12 @@ a {
     line-height: 1.8;
 }
 
+.testimonials-disclaimer {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
 /* Services */
 .services-section {
     background: radial-gradient(circle at top left, rgba(191, 95, 255, 0.12), transparent 35%), var(--bg);
