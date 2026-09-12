@@ -10,7 +10,7 @@
     --text: #e8e8f0;
     --muted: #7a788a;
     --gradient: linear-gradient(135deg, var(--cyan), var(--purple));
-    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-sans: 'Sora', system-ui, sans-serif;
     --font-mono: 'Fira Code', monospace;
     --radius: 12px;
     --shadow-neon: 0 0 20px rgba(0, 245, 255, 0.15);
